@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "funcoes.h"
 
-
 Objeto* inserirObjeto(Objeto * lista, char nome[], float d)
 {Objeto *obj = (Objeto*) malloc(sizeof(Objeto));
 
