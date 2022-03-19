@@ -4,12 +4,18 @@
 #include "funcoes.h"
 
 int main(){
-	Objeto *objetos=NULL; // Lista ligada vazia
-	printf("Quantidade: %d\n", quantidadeObjetos(objetos));
+	int machArray[10]={1, 3};
+	int timehArray[10]={4, 5};
+	int noperation=1;
+ // Lista ligada vazia
+ 	Process *process=NULL;
+	process = MallocProcessPlan(process);
+	process = InsertProcessPlan(process,1);
+	ShowList(process);
 
+	Operation *op=NULL;
+	op = MallocOperation(op);
+	process = InsertProcessPlan(op,process,noperation,machArray,timehArray);
+	ShowList(process);
 
-	// Se a lista ligada não for vazia
-	// então objetos contém o endereço de memória do
-	// 1º registo da lista ligada
-	objetos = inserirObjeto(objetos,"info1",100);
 }

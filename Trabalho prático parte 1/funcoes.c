@@ -1,16 +1,56 @@
-#include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "funcoes.h"
 
+Process *MallocProcessPlan(Process *prs)
+{
+     printf("MAlloc process plan");//Debug
+    prs = (Process *)malloc(sizeof(Process));
+    return (prs);
+}
 
-Objeto* inserirObjeto(Objeto * lista, char nome[], float d)
-{Objeto *obj = (Objeto*) malloc(sizeof(Objeto));
+Process *InsertProcessPlan(Process *prs, int nnp)
+{
 
- if (obj!=NULL)
- {strcpy(obj->nome,nome);
-  obj->dist = d;
-  obj->seguinte = lista;
-  return(obj);
- }
- else return(lista);
+    if (prs != NULL)
+    {
+        prs->npp = nnp;
+        prs->op = NULL;
+        prs->next = NULL;
+    }
+    else
+        return (prs);
+}
+
+void ShowList(Process *prs)
+{
+    printf("entrou");
+    while (prs != NULL)
+    {
+        printf("Number npp: %d e %p\n", prs->npp, prs->next);
+        prs = prs->next;
+    }
+}
+
+Operation *MallocOperation(Operation *op)
+{
+    printf("MAlloc operações");//Debug
+    op = (Operation *)malloc(sizeof(Operation));
+    return (op);
+}
+
+Operation *InsertOperation(Operation *op,Process *prs,int nprocess,int noperation,int machArray[],int timehArray[])
+{
+    if(nprocess!=)
+
+
+    if (prs != NULL)
+    {
+        prs->npp = nnp;
+        prs->op = NULL;
+        prs->next = NULL;
+    }
+    else
+        return (prs);
 }
