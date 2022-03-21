@@ -23,7 +23,9 @@ typedef struct _pp {
 	struct _pp *next;
 }Process;
 
-
-Process* mallocProcessPlan(Operation* op, Process* prs,int noperation, int machArray[],int timehArray[]);
-Process* insertProcessPlan(Process* prs,int npp);
-void showList(Process* prs);
+Process *MallocProcessPlan(Process *prs);
+Process *InsertProcessPlan(Process *prs, int nnp);
+Operation *MallocOperation(Operation *op);
+Operation *InsertOperation(Operation *op, Process *prs, int nprocess);
+Machine* MallocMachine(Machine *mch);
+void InsertMachine(Process *prs, int process, int maquina, int operacao, int pc, int time);
