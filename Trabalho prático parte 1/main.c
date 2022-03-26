@@ -15,10 +15,12 @@
 
 int main()
 {
-
+/*
 	FILE *fl = fopen("dados.txt", "rt");
 	char str[50];
 	char str1[50];
+	int machine[10];
+	int time[10];
 	char *pch;
 	char *pch1;
 	int op;
@@ -27,43 +29,12 @@ int main()
 		if (!feof(fl))
 		{
 			printf("\nentrou_____________-\n");
-			fscanf(fl, "%d;[^,];[^,];", &op, str[50], str1[50]);
-			pch = strtok(str, "[,]");
-			while (pch != NULL)
-			{
-				printf("%s\n", pch);
-				pch = strtok(NULL, "[,]");
-			}
-			pch1 = strtok(str1, "[,]");
-			while (pch1 != NULL)
-			{
-				printf("%s\n", pch1);
-				pch1 = strtok(NULL, "[,]");
-			}
-
-			printf("%d\n %s %s ", op, str, str1);
-
-			/*
-						fscanf(fl, "%s\n", str);
-						printf("%s\n", str);
-						pch = strtok(str, "[,]");
-						while (pch != NULL)
-						{
-							printf("%s\n", pch);
-							pch = strtok(NULL, "[,]");
-						}
-
-						fscanf(fl, "%s\n", str);
-						printf("%s\n", str);
-						pch = strtok(str, "(,)");
-						while (pch != NULL)
-						{
-							printf("%s\n", pch);
-							pch = strtok(NULL, "(,)");
-						}*/
+			fscanf(fl, "%d;%[^;];%[^;]", &op, str, str1);
+			printf("ola %d %s %s",op,str, str1);
 			fclose(fl);
-		}
 
+		}
+*/
 	int nprocess = 1;
 	int nop = 33;
 	int nop1 = 53;
