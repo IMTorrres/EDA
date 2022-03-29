@@ -16,7 +16,7 @@
 #pragma endregion
 
 #pragma region Metodosº
-
+/*
 Process *InsertData(Process *process, int nprocess, int nop, int pc, int time)
 {
     Process *prs = CreateProcessPlan(nprocess);
@@ -32,8 +32,8 @@ Process *InsertData(Process *process, int nprocess, int nop, int pc, int time)
     process = InsertMachineOperationProcess(process, machineobj, nop, nprocess);
     Machine *machine = CreateMachine(12, 21);
     process = InsertMachineOperationProcess(process, machine, 3, nprocess);
-}
-
+}*/
+/*
 Process *ReadFile()
 {
 
@@ -56,7 +56,7 @@ Process *ReadFile()
             InsertData(process,nprocess, int nop, int pc, int time);
         }
 }
-
+*/
 Process *SearchProcessPlan(Process *prs, int nProcess)
 {
     Process *auxPrs = prs;
@@ -67,8 +67,10 @@ Process *SearchProcessPlan(Process *prs, int nProcess)
         {
             return auxPrs;
         }
+
         auxPrs = auxPrs->next;
     }
+ 
 }
 
 Operation *SearchOperation(Operation *op, int nOperation)
@@ -135,7 +137,7 @@ Process *CreateProcessPlan(int npp)
  */
 Process *InsertProcessPlan(Process *prsobj, Process *process)
 {
-    if (prsobj != NULL)
+    if (prsobj != NULL )
     {
         prsobj->op = NULL;
         prsobj->next = process;

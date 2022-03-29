@@ -16,37 +16,28 @@
 
 int main()
 {
-	/*
-		int nprocess = 1;
-		int nop = 33;
-		int nop1 = 53;
-		// Lista ligada vazia
-		Process *process;
-		Process *prs = CreateProcessPlan(nprocess);
-		process = InsertProcessPlan(prs, process);
 
-		Operation *operationobj = CreateOperation(nop);
-		process = InsertOperationProcess(operationobj, process, nprocess);
-
-		operationobj = CreateOperation(3);
-		process = InsertOperationProcess(operationobj, process, nprocess);
-
-		printf("Insira PP");
-		printf("Insira Operation");
-		printf("Insira Maquina");
-		int processo = 1;
-		int maquina = 1;
-		int operacao = 1;
-		int pc = 111;
-		int time = 222;
-		Machine *machineobj = CreateMachine(pc, time);
-		process = InsertMachineOperationProcess(process, machineobj, nop, nprocess);
-		Machine *machine = CreateMachine(12, 21);
-		process = InsertMachineOperationProcess(process, machine, 3, nprocess);
-	*/
 	int nprocess = 1;
+	int nprocess2 = 2;
 	int nop = 33;
 	int nop1 = 53;
+	int nop2 = 33;
+	int nop12 = 53;
+	// Lista ligada vazia
+	Process *process;
+	Process *prsObj = CreateProcessPlan(nprocess);
+	process = InsertProcessPlan(prsObj, process);
+	
+	Operation *operationobj = CreateOperation(nop);
+	process = InsertOperationProcess(operationobj, process, nprocess);
+	operationobj = CreateOperation(3);
+	process = InsertOperationProcess(operationobj, process, nprocess);
+	int pc = 111;
+	int time = 222;
+	Machine *machineobj = CreateMachine(pc, time);
+	process = InsertMachineOperationProcess(process, machineobj, nop, nprocess);
+	Machine *machine = CreateMachine(12, 21);
+	process = InsertMachineOperationProcess(process, machine, 3, nprocess);
 
 	int opSub;
 	int prsSub;
@@ -62,11 +53,11 @@ int main()
 		switch (option)
 		{
 		case 1:
-			Process *process;
-			process = InsertData(process);
-				// Lista ligada vazia
+			Showlist(process);
+			/*Process *process;
+			process = InsertData(process);*/
+			// Lista ligada vazia
 
-				
 			break;
 		case 2:
 			printf("\nInsira o processo a remover\nProcesso:");
@@ -115,6 +106,6 @@ int main()
 		default:
 			break;
 		}
-		Showlist(process);
+
 	} while (option != 0);
 }
