@@ -15,26 +15,72 @@
 #include "funcoes.h"
 #pragma endregion
 
-#pragma region Metodosº
-/*
-Process *InsertData(Process *process, int nprocess, int nop, int pc, int time)
+#pragma region Metodos
+
+Process *InsertData(Process *process)
 {
+    int nprocess = 1;
+    int nop = 3;
+    int time = 5;
+    int pc = 32;
     Process *prs = CreateProcessPlan(nprocess);
     process = InsertProcessPlan(prs, process);
+    /*
+        Operation *operationobj = CreateOperation(nop);
+        process = InsertOperationProcess(operationobj, process, nprocess);
 
-    Operation *operationobj = CreateOperation(nop);
-    process = InsertOperationProcess(operationobj, process, nprocess);
+        Machine *machineobj = CreateMachine(pc, time);
+        process = InsertMachineOperationProcess(process, machineobj, nop, nprocess);*/
 
-    operationobj = CreateOperation(3);
-    process = InsertOperationProcess(operationobj, process, nprocess);
+    Operation *operationobj = CreateOperation(01);
+    process = InsertOperationProcess(operationobj, process, 1);
+    operationobj = CreateOperation(02);
+    process = InsertOperationProcess(operationobj, process, 1);
+    operationobj = CreateOperation(03);
+    process = InsertOperationProcess(operationobj, process, 1);
+    operationobj = CreateOperation(04);
+    process = InsertOperationProcess(operationobj, process, 1);
 
-    Machine *machineobj = CreateMachine(pc, time);
-    process = InsertMachineOperationProcess(process, machineobj, nop, nprocess);
-    Machine *machine = CreateMachine(12, 21);
-    process = InsertMachineOperationProcess(process, machine, 3, nprocess);
-}*/
-/*
-Process *ReadFile()
+    Machine *machineobj = CreateMachine(1, 4);
+    process = InsertMachineOperationProcess(process, machineobj, 1, nprocess);
+
+   machineobj = CreateMachine(3, 5);
+    process = InsertMachineOperationProcess(process, machineobj, 1, nprocess);
+
+   machineobj = CreateMachine(2, 4);
+    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+
+   machineobj = CreateMachine(4, 5);
+    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+
+   machineobj = CreateMachine(2, 4);
+    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+
+   machineobj = CreateMachine(4, 5);
+    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+
+   machineobj = CreateMachine(3, 5);
+    process = InsertMachineOperationProcess(process, machineobj, 3, nprocess);
+
+   machineobj = CreateMachine(5, 6);
+    process = InsertMachineOperationProcess(process, machineobj, 3, nprocess);
+
+   machineobj = CreateMachine(4, 5);
+    process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
+
+   machineobj = CreateMachine(5, 5);
+    process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
+   machineobj = CreateMachine(6, 4);
+    process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
+
+   machineobj = CreateMachine(7, 5);
+    process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
+      machineobj = CreateMachine(8, 9);
+    process = InsertMachineOperationProcess(process, machineobj, 4, nprocess);
+    return process;
+}
+
+Process *ReadFile(Process *process)
 {
 
     FILE *fl = fopen("dados.txt", "rt");
@@ -43,20 +89,26 @@ Process *ReadFile()
     int machine[10];
     int time[10];
     char *pch;
-    char *pch1;
+
     int op;
     if (fl != NULL)
 
         if (!feof(fl))
         {
-            printf("\nentrou_____________-\n");
             fscanf(fl, "%d;%[^;];%[^;]\n", &op, str, str1);
-            printf("ola %d %s %s", op, str, str1);
+            printf("%d %s %s", op, str, str1);
             fclose(fl);
-            InsertData(process,nprocess, int nop, int pc, int time);
         }
+    pch = strtok(str, ",");
+    while (pch != NULL)
+    {
+        printf("%s\n", pch);
+        pch = strtok(NULL, ",");
+    }
+
+    return process;
 }
-*/
+
 Process *SearchProcessPlan(Process *prs, int nProcess)
 {
     Process *auxPrs = prs;
@@ -70,7 +122,6 @@ Process *SearchProcessPlan(Process *prs, int nProcess)
 
         auxPrs = auxPrs->next;
     }
- 
 }
 
 Operation *SearchOperation(Operation *op, int nOperation)
@@ -97,8 +148,8 @@ Machine *SearchMachine(Machine *mch, int nMachine)
         auxMch = auxMch->next;
     }
 }
-Machine *ChangeMachine(Process *process, int nProcess, int nOperation, int nMachine)
-{
+void ChangeMachine(Process *process, int nProcess, int nOperation, int nMachine)
+{printf("ola asd as d");
     Process *prs = NULL;
     Operation *op = NULL;
     Machine *mch = NULL;
@@ -107,7 +158,7 @@ Machine *ChangeMachine(Process *process, int nProcess, int nOperation, int nMach
     op = SearchOperation(op, nOperation);
     op->machine = mch;
     mch = SearchMachine(mch, nMachine);
-    return mch;
+    
 }
 
 #pragma region PP
@@ -122,12 +173,12 @@ Process *CreateProcessPlan(int npp)
 {
     printf("MAlloc process plan--\n"); // Debug
     Process *aux = (Process *)calloc(1, sizeof(Process));
-    // if (aux != NULL)
-    //{
-    aux->npp = npp;
-    aux->next = NULL;
-    printf("create pp %d %p", aux->npp, aux->next);
-    // }
+    if (aux != NULL)
+    {
+        aux->npp = npp;
+        aux->next = NULL;
+        printf("create pp %d %p", aux->npp, aux->next);
+    }
     return aux;
 }
 
@@ -137,7 +188,7 @@ Process *CreateProcessPlan(int npp)
  */
 Process *InsertProcessPlan(Process *prsobj, Process *process)
 {
-    if (prsobj != NULL )
+    if (prsobj != NULL)
     {
         prsobj->op = NULL;
         prsobj->next = process;

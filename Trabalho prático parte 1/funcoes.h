@@ -43,11 +43,11 @@ Process *InsertOperationProcess(Operation *op, Process *prs, int nprocess);
 Machine *CreateMachine(int pc, int time);
 Process *InsertMachineOperationProcess(Process *prs, Machine *mch, int nop, int nprocess);
 void RemoveOperation(Process *process, int opPrs, int opSubs);
-int ShowOperation(Process *process,int prsSub,int opSub);
+int ShowOperation(Process *process, int prsSub, int opSub);
 void Showlist(Process *prs);
 Process *SearchProcessPlan(Process *prs, int nProcess);
 Operation *SearchOperation(Operation *op, int nOperation);
 Machine *SearchMachine(Machine *mch, int nMachine);
-Machine *ChangeMachine(Process *process, int prsSub, int opSub, int mchSub);
-
-
+void ChangeMachine(Process *process, int prsSub, int opSub, int mchSub);
+Process *InsertData(Process *process);
+Process *ReadFile(Process *process);
