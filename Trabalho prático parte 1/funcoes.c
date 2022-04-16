@@ -51,19 +51,19 @@ Process *InsertData(Process *process)
 
     machineobj = CreateMachine(3, 5);
     process = InsertMachineOperationProcess(process, machineobj, 1, nprocess);
+    /*
+        machineobj = CreateMachine(2, 4);
+        process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
 
-    machineobj = CreateMachine(2, 4);
-    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+        machineobj = CreateMachine(4, 5);
+        process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
 
-    machineobj = CreateMachine(4, 5);
-    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+        machineobj = CreateMachine(2, 4);
+        process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
 
-    machineobj = CreateMachine(2, 4);
-    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
-
-    machineobj = CreateMachine(4, 5);
-    process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
-
+        machineobj = CreateMachine(4, 5);
+        process = InsertMachineOperationProcess(process, machineobj, 2, nprocess);
+    */
     machineobj = CreateMachine(3, 5);
     process = InsertMachineOperationProcess(process, machineobj, 3, nprocess);
 
@@ -179,7 +179,7 @@ Machine *SearchMachine(Machine *mch, int nMachine)
     }
 }
 /**
- * @brief Altera os valores de maquina
+ * @brief Altera os valores de machine
  *
  * @param process
  * @param nProcess
@@ -246,13 +246,13 @@ Process *InsertProcessPlan(Process *prsobj, Process *process)
 }
 
 #pragma endregion
-
 /**
- * @brief  Mostra todas as litas
+ * @brief Mostra todas as litas
  *
  * @param prs
+ * @return int
  */
-void Showlist(Process *prs)
+int Showlist(Process *prs)
 {
     Process *auxPrs = prs;
     Operation *op = NULL;
@@ -277,16 +277,17 @@ void Showlist(Process *prs)
 
         auxPrs = auxPrs->next;
     }
+    return 1;
 }
 /**
- * @brief Mostra todos os valores
+ * @brief Mostra todos os valores encolhendo process e operation
  *
  * @param process
  * @param prsSub
  * @param opSub
  * @return int
  */
-int ShowOperation(Process *process, int prsSub, int opSub)
+int Show(Process *process, int prsSub, int opSub, int showPrs, int showOp, int showMachine)
 {
 
     Process *auxPrs = process;
@@ -294,17 +295,23 @@ int ShowOperation(Process *process, int prsSub, int opSub)
     Machine *mch = NULL;
     while (auxPrs != NULL)
     {
+        if (showPrs = 1)
+            printf("\nNumber npp: %p %d %p\n", auxPrs, auxPrs->npp, auxPrs->next);
         if (prsSub == auxPrs->npp)
         {
             op = auxPrs->op;
             while (op != NULL)
             {
+                if (showOp == 1)
+                    printf(" \n    Operation: %p %d %p\n", op, op->noperation, op->next);
+
                 if (opSub == op->noperation)
                 {
                     mch = op->machine;
                     while (mch != NULL)
                     {
-                        printf("\n       Machine: %d Time: %d\n", mch->pc, mch->time);
+                        if (showMachine == 1)
+                            printf("       Machine: %d Time: %d\n", mch->pc, mch->time);
                         mch = mch->next;
                     }
                     return 1;
@@ -314,6 +321,49 @@ int ShowOperation(Process *process, int prsSub, int opSub)
             }
         }
 
+        auxPrs = auxPrs->next;
+    }
+}
+
+/**
+ * @brief Mostra todos os valores encolhendo process e operation
+ *
+ * @param process
+ * @param prsSub
+ * @param opSub
+ * @return int
+ */
+int ShowAll(Process *process, int showPrs, int showOp, int showMachine)
+{
+
+    Process *auxPrs = process;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    while (auxPrs != NULL)
+    {
+        if (showPrs = 1)
+            printf("\nNumber npp: %p %d %p\n", auxPrs, auxPrs->npp, auxPrs->next);
+        if (showOp == 1)
+        {
+            op = auxPrs->op;
+            while (op != NULL)
+            {
+
+                printf(" \n    Operation: %p %d %p\n", op, op->noperation, op->next);
+                if (showMachine == 1)
+                {
+                    mch = op->machine;
+                    while (mch != NULL)
+                    {
+
+                        printf("       Machine: %d Time: %d\n", mch->pc, mch->time);
+                        mch = mch->next;
+                    }
+                    return 1;
+                }
+                op = op->next;
+            }
+        }
         auxPrs = auxPrs->next;
     }
 }
@@ -348,7 +398,6 @@ Operation *CreateOperation(int nOp)
  */
 Process *InsertOperationProcess(Operation *opobj, Process *prs, int nprocess)
 {
-
     Process *auxPrs = prs;
     Operation *opaux = prs->op;
     while (auxPrs != NULL)
@@ -368,53 +417,81 @@ Process *InsertOperationProcess(Operation *opobj, Process *prs, int nprocess)
         auxPrs = auxPrs->next;
     }
 }
+/**
+ * @brief Romove uma operation de um process
+ *
+ * @param prs
+ * @param prsSubs
+ * @param opSubs
+ */
+Process *RemoveOperation(Process *prs, int prsSubs, int opSubs)
+{ /*
+     Operation *Op = lista->op;
 
-void RemoveOperation(Process *prs, int prsSubs, int opSubs)
-{
+     Operation *nodoAtual = Op, *nodoAnterior;
+     if (Op->noperation == opSubs)
+     {
+         Op = nodoAtual->next;
+         free(nodoAtual);
+     }
+     else
+     {
+         nodoAnterior = Op;
+         nodoAtual = nodoAnterior->next;
+         while ((nodoAtual != NULL) && (Op->noperation == opSubs))
+         {
+             nodoAnterior = nodoAtual;
+             nodoAtual = nodoAtual->next;
+         }
+         if (nodoAtual != NULL)
+         {
+             nodoAnterior->next = nodoAtual->next;
+             free(nodoAtual);
+         }
+     }
+ */
 
     Process *auxPrs = prs;
-    Operation *op = NULL;
-    Machine *mch = NULL;
-    while (auxPrs != NULL)
-    {
-        if (prsSubs == auxPrs->npp)
-        {printf("ja deu");
-            op = auxPrs->op;
-            Operation *nodoAtual = op, *nodoAnterior;
-            if (op->noperation == opSubs)
-            {
-                printf("entrou if");
-                op = nodoAtual->next;
-                free(nodoAtual);
-                free(op->machine);
-            }
-            else
-            {
-                nodoAnterior = op;
-                nodoAtual = nodoAnterior->next;
-                while ((nodoAtual != NULL) && (nodoAtual->noperation != opSubs))
-                {
-                    nodoAnterior = nodoAtual;
-                    nodoAtual = nodoAtual->next;
-                }
-                if (nodoAtual != NULL)
-                {
-                    nodoAnterior->next = nodoAtual->next;
-                    free(nodoAtual);
-                    Machine *mchRemove = nodoAtual->machine;
-                    Machine *auxRemoveMachine;
-                    while (mchRemove != NULL)
-                    {
-                        auxRemoveMachine = mchRemove;
-                        mchRemove = mchRemove->next;
-                        free(auxRemoveMachine);
-                    }
-                }
-                // return (lista);
-            }
-            break;
+    Operation *Op = NULL;
+    Machine *Mch = NULL;
+    Operation *auxRemoveOp = NULL;
+    Machine *auxRemoveMch = NULL;
+    if (auxPrs != NULL)
+    { // apaga nodod
+        Op = auxPrs->op;
+        Op = SearchOperation(Op, opSubs);
+        // apaga lista completa
+        /* Mch = Op->machine;
+         while (Mch != NULL)
+         {
+             auxRemoveMch = Mch;
+             Mch = Mch->next;
+             free(auxRemoveMch);
+         }///////////*/
+        // Op->machine = NULL;
+        Operation *nodoAtual = Op, *nodoAnterior;
+        if (nodoAtual->noperation == opSubs)
+        {
+            Op = nodoAtual->next;
+            prs->op = Op;
+            free(nodoAtual);
         }
-        auxPrs = auxPrs->next;
+        else
+        {
+            nodoAnterior = Op;
+            nodoAtual = nodoAnterior->next;
+            while ((nodoAtual != NULL) && (nodoAtual->noperation == opSubs))
+            {
+                nodoAnterior = nodoAtual;
+                nodoAtual = nodoAtual->next;
+            }
+            if (nodoAtual != NULL)
+            {
+                nodoAnterior->next = nodoAtual->next;
+                free(nodoAtual);
+            }
+        }
+        return prs;
     }
 }
 
@@ -423,33 +500,30 @@ void RemoveOperation(Process *prs, int prsSubs, int opSubs)
 
 Machine *CreateMachine(int pc, int time)
 {
-    printf("MAlloc machine--\n"); // Debug
     Machine *aux = (Machine *)calloc(1, sizeof(Machine));
 
     aux->pc = pc;
     aux->time = time;
     aux->next = NULL;
-    printf("create machine %d %d %p", aux->pc, aux->time, aux->next);
     return aux;
 }
 
 Process *InsertMachineOperationProcess(Process *prs, Machine *machine, int nop, int nprocess)
 {
+    printf("\n----ISP %p %p %d %d \n", prs, machine, nop, nprocess);
     Process *auxPrs = prs;
-    Operation *opaux = prs->op;
 
-    printf("InsertOperation entrou"); // debug
     while (auxPrs != NULL)
     {
-
         if (nprocess == auxPrs->npp) // encontra o numero de processo igual
         {
             // dar next em op e adicionar o valor de op ao pp
-
+            Operation *opaux = prs->op;
             while (opaux != NULL)
             {
                 if (nop == opaux->noperation)
                 {
+                    printf("machine %p", machine);
                     if (machine != NULL)
                     {
                         machine->next = opaux->machine;
@@ -466,42 +540,30 @@ Process *InsertMachineOperationProcess(Process *prs, Machine *machine, int nop, 
         auxPrs = auxPrs->next;
     }
     // InsertMachine();
-    printf("%p -----", auxPrs);
+    return prs;
 }
 #pragma endregion
 
 float MeanLow(Process *process, int processMeanLow)
 {
-
     Process *prs = NULL;
     Operation *op = NULL;
     Machine *mch = NULL;
-    int sum = 0;
-    float mean = 0;
+    float sum = 0;
     int count = 0;
     int lowTime;
     if (process != NULL)
     {
         prs = SearchProcessPlan(process, processMeanLow);
         op = prs->op;
-        printf("\noper %p", prs->op);
-
         while (op != NULL)
         {
-
-            op = SearchOperation(op, op->noperation);
             mch = op->machine;
             lowTime = mch->time;
-            printf("\nxxxxxxx %d\n", lowTime);
             while (mch != NULL)
             {
-
-                printf("\n----tempo %d e %d\n", lowTime, mch->time);
-                mch = SearchMachine(mch, mch->pc);
-
                 if (mch->time < lowTime)
                 {
-                    printf("foi desta");
                     lowTime = mch->time;
                 }
                 mch = mch->next;
@@ -512,14 +574,180 @@ float MeanLow(Process *process, int processMeanLow)
         }
     }
 
+    return (sum / count);
+}
+/**
+ * @brief Media de todos os tempos mais altos de um dado process
+ *
+ * @param process
+ * @param processMeanHigh
+ * @return float
+ */
+float MeanHigh(Process *process, int processMeanHigh)
+{
+    Process *prs = NULL;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    float sum = 0;
+    float mean = 0;
+    int count = 0;
+    int highTime;
+    if (process != NULL)
+    {
+        prs = SearchProcessPlan(process, processMeanHigh);
+        op = prs->op;
+        while (op != NULL)
+        {
+            mch = op->machine;
+            highTime = 0;
+            while (mch != NULL)
+            {
+                if (mch->time > highTime)
+                {
+                    highTime = mch->time;
+                }
+                mch = mch->next;
+            }
+            sum = sum + highTime;
+            count++;
+            op = op->next;
+        }
+    }
     mean = sum / count;
-    printf("\noiii------%d", count);
     return mean;
 }
 
-float MeanHigh(Process *process, int processMeanHigh)
+/**
+ * @brief Determinação da quantidade média de unidades de tempo necessárias para completar uma operation,
+considerando todas as alternativas possíveis
+ *
+ * @param process
+ * @param operationMean
+ * @return float
+ */
+float MeanOperation(Process *process, int operationMean)
 {
+    Process *prs = process;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    float sum = 0;
+    float mean = 0;
+    int count = 0;
+    int time;
 
+    if (process != NULL)
+    {
+        op = prs->op;
+        while (op != NULL)
+        {
+            if (op->noperation == operationMean)
+            {
+                mch = op->machine;
+                while (mch != NULL)
+                {
+                    sum = sum + mch->time;
+                    count++;
+
+                    mch = mch->next;
+                }
+            }
+            op = op->next;
+        }
+    }
+    printf("mean %f", mean);
+
+    return (sum / count);
+}
+
+/**
+ * @brief Determinação da quantidade média de unidades de tempo necessárias para completar uma processo,
+considerando todas as alternativas possíveis
+ *
+ * @param process
+ * @param processMean
+ * @return float
+ */
+float MeanProcess(Process *process, int processMean)
+{
+    Process *prs = NULL;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    float sum = 0;
+    float mean = 0;
+    int count = 0;
+    int time;
+    if (process != NULL)
+    {
+        prs = SearchProcessPlan(process, processMean);
+        op = prs->op;
+        while (op != NULL)
+        {
+            mch = op->machine;
+            time = 0;
+            while (mch != NULL)
+            {
+                time = mch->time;
+                sum = sum + time;
+                count++;
+                mch = mch->next;
+            }
+
+            op = op->next;
+        }
+    }
+    return (sum / count);
+}
+
+/**
+ * @brief Determina da quantidade mínima de unidades de tempo necessárias para completar o process e listagem das
+respetivas operations
+ *
+ * @param process
+ * @param processSumLow
+ * @return int
+ */
+int SumLow(Process *process, int processSumLow)
+{
+    Process *prs = NULL;
+    Operation *op = NULL;
+    Machine *mch = NULL;
+    int lowTime;
+    int sum = 0;
+    if (process != NULL)
+    {
+
+        prs = SearchProcessPlan(process, processSumLow);
+        op = prs->op;
+        Show(process, prs->npp, op->noperation, 0, 1, 1);
+        while (op != NULL)
+        {
+            mch = op->machine;
+            lowTime = mch->time;
+            while (mch != NULL)
+            {
+                if (mch->time < lowTime)
+                {
+                    lowTime = mch->time;
+                }
+                mch = mch->next;
+            }
+            sum = sum + lowTime;
+            op = op->next;
+        }
+    }
+
+    return sum;
+}
+/**
+ * @brief Determina da quantidade maxima de unidades de tempo necessárias para completar o process e listagem das
+respetivas operations
+ *
+ * @param process
+ * @param processMeanHigh
+ * @return int
+ */
+int SumHigh(Process *process, int processMeanHigh)
+{
     Process *prs = NULL;
     Operation *op = NULL;
     Machine *mch = NULL;
@@ -531,35 +759,22 @@ float MeanHigh(Process *process, int processMeanHigh)
     {
         prs = SearchProcessPlan(process, processMeanHigh);
         op = prs->op;
-
         while (op != NULL)
         {
-
-            op = SearchOperation(op, op->noperation);
             mch = op->machine;
-
             highTime = 0;
             while (mch != NULL)
             {
-                mch = SearchMachine(mch, mch->pc);
-
-                // count++;
                 if (mch->time > highTime)
                 {
-
                     highTime = mch->time;
                 }
                 mch = mch->next;
             }
             sum = sum + highTime;
-            count++;
             op = op->next;
         }
     }
-
-    mean = sum / count;
-
-    return mean;
+    return sum;
 }
-
 #pragma endregion

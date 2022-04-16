@@ -36,20 +36,38 @@ typedef struct _pp
 	struct _pp *next;
 } Process;
 
-Process *CreateProcessPlan(int npp);
-Process *InsertProcessPlan(Process *prs, Process *Process);
-Operation *CreateOperation(int nop);
-Process *InsertOperationProcess(Operation *op, Process *prs, int nprocess);
+Process *CreateProcessPlan(int numberProcess);
+Process *InsertProcessPlan(Process *prsObj, Process *Process);
+
+Operation *CreateOperation(int numberOperation);
+Process *InsertMachineOperationProcess(Process *prs, Machine *mchObj, int numberOperation, int numberProcess);
+
 Machine *CreateMachine(int pc, int time);
-Process *InsertMachineOperationProcess(Process *prs, Machine *mch, int nop, int nprocess);
-void RemoveOperation(Process *process, int opPrs, int opSubs);
-int ShowOperation(Process *process, int prsSub, int opSub);
-void Showlist(Process *prs);
+Process *InsertOperationProcess(Operation *opObj, Process *prs, int numberProcess); 
+
+Process *RemoveOperation(Process *process, int opPrs, int opSubs);
+
+int Show(Process *process, int prsSub, int opSub, int showPrs, int showOp, int showMch);
+int ShowAll(Process *process, int showPrs, int showOp, int showMch);
+int Showlist(Process *prs);
+
+
 Process *SearchProcessPlan(Process *prs, int nProcess);
 Operation *SearchOperation(Operation *op, int nOperation);
 Machine *SearchMachine(Machine *mch, int nMachine);
+
 Machine *ChangeMachine(Process *process, int prsSub, int opSub, int mchSub);
+
 Process *InsertData(Process *process);
+
 Process *ReadFile(Process *process);
-float MeanLow(Process *process,int processMeanLow);
-float MeanHigh(Process *process,int processMeanLow);
+
+float MeanLow(Process *process, int processMeanLow);
+float MeanHigh(Process *process, int processMeanLow);
+float MeanProcess(Process *process, int processMean);
+float MeanOperation(Process *process, int operationMean);
+
+int SumLow(Process *process, int processMeanLow);
+int CountOperation(Operation *operation);
+int ShowProcess(Process *process);
+int SumHigh(Process *process, int processSumHigh);

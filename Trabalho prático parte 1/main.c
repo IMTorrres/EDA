@@ -14,31 +14,10 @@
 #include "funcoes.h"
 #include <time.h>
 
+#define TAM 1000
+
 int main()
-{ /*
-
-	 int nprocess = 1;
-	 int nprocess2 = 2;
-	 int nop = 33;
-	 int nop1 = 53;
-	 int nop2 = 33;
-	 int nop12 = 53;
-	 // Lista ligada vazia
-	 Process *process;
-	 Process *prsObj = CreateProcessPlan(nprocess);
-	 process = InsertProcessPlan(prsObj, process);
-
-	 Operation *operationobj = CreateOperation(nop);
-	 process = InsertOperationProcess(operationobj, process, nprocess);
-	 operationobj = CreateOperation(3);
-	 process = InsertOperationProcess(operationobj, process, nprocess);
-	 int pc = 111;
-	 int time = 222;
-	 Machine *machineobj = CreateMachine(pc, time);
-	 process = InsertMachineOperationProcess(process, machineobj, nop, nprocess);
-	 Machine *machine = CreateMachine(12, 21);
-	 process = InsertMachineOperationProcess(process, machine, 3, nprocess);
- */
+{
 	int opSub;
 	int prsSub;
 	int mchSub;
@@ -48,11 +27,73 @@ int main()
 	Process *process = NULL;
 	do
 	{
+		int nprocess = 1;
+		int nop = 3;
+		int time = 5;
+		int pc = 32;
 
 		printf("\nInsira a opcao:\nOption:");
 		scanf("%d", &option);
 		switch (option)
 		{
+		case 0:
+			Process *prs = CreateProcessPlan(nprocess);
+			process = InsertProcessPlan(prs, process);
+			Operation *operationobj = NULL;
+			Machine *machineobj = NULL;
+			{
+				FILE *fp = fopen("dados.txt", "rt");
+				int op;
+				char str[50];
+				char *pch;
+				int mch[TAM];
+				int time[TAM];
+				int i = 0;
+				int t = 0;
+
+				if (fp != NULL)
+					while (!feof(fp))
+					{
+						fscanf(fp, "%d\n", &op);
+						printf("OP %d\n", op);
+						i = 0;
+						t = 0;
+
+						operationobj = CreateOperation(op);
+						process = InsertOperationProcess(operationobj, process, op);
+						printf("segunda vez----%p", process);
+						fscanf(fp, "%s\n", str);
+						printf("%s\n", str);
+						pch = strtok(str, "[,]");
+						while (pch != NULL)
+						{
+							printf("%s\n", pch);
+							mch[i] = atoi(pch);
+							pch = strtok(NULL, "[,]");
+							i++;
+						}
+
+						fscanf(fp, "%s\n", str);
+						printf("%s\n", str);
+						pch = strtok(str, "(,)");
+						while (pch != NULL)
+						{
+							printf("%s\n", pch);
+							time[t] = atoi(pch);
+							pch = strtok(NULL, "(,)");
+							t++;
+						}
+						for (int z = 0; z < i; z++)
+						{
+							machineobj = NULL;
+							machineobj = CreateMachine(mch[z], time[z]);
+							process = InsertMachineOperationProcess(process, machineobj, 1, op);
+						}
+					}
+				Showlist(process);
+			}
+			break;
+
 		case 1:
 
 			/*process = ReadFile(process);*/
@@ -80,15 +121,14 @@ int main()
 			printf("\nInsira a operação a alterar\nOperação:");
 			scanf("%d", &opSub);
 
-			rtr = ShowOperation(process, prsSub, opSub);
+			rtr = Show(process, prsSub, opSub, 0, 0, 1);
 
 			if (rtr == 0)
 				printf("\nOpções inválida");
 
 			printf("\nInsira a maquina a alterar\nOperação:");
 			scanf("%d", &mchSub);
-			printf("\n---conteudo %d %p ", process->npp, process->next);
-			printf("-----------------");
+
 			Machine *objMchSubs = NULL;
 			objMchSubs = ChangeMachine(process, prsSub, opSub, mchSub);
 
@@ -96,10 +136,10 @@ int main()
 			scanf("%d", &mchSub);
 			printf("Novo tempo da maquina %d:\nMaquina:", mchSub);
 			scanf("%d", &timeSub);
+
 			objMchSubs->pc = mchSub;
 			objMchSubs->time = timeSub;
 
-			
 			break;
 		case 4: // Media mais baixa
 			int processMeanLow;
@@ -114,12 +154,40 @@ int main()
 			scanf("%d", &processMeanHigh);
 			printf("\n A media mais baixa é: %.2f", MeanHigh(process, processMeanHigh));
 			break;
-		case 69:
+		case 6:
+			int processMean;
+			printf("Insira o processo a calcular: ");
+			scanf("%d", &processMean);
+			printf("\n A media do process é é: %.2f", MeanProcess(process, processMean));
+			break;
+		case 7:
+			int operationMean;
+			printf("Insira a operation a calcular: ");
+			scanf("%d", &operationMean);
+
+			printf("ola a s%p", process);
+			printf("\n A da operation é: %.2f", MeanOperation(process, operationMean));
+			break;
+		case 8:
+			int processSumLow;
+			printf("Insira o processo a calcular: ");
+			scanf("%d", &processSumLow);
+			printf("\n Quantidade mínima de unidades de tempo : %d", SumLow(process, processSumLow));
+			break;
+		case 9:
+			int processSumHigh;
+			printf("Insira o processo a calcular: ");
+			scanf("%d", &processSumHigh);
+			printf("\n Quantidade maxima de unidades de tempo : %d", SumHigh(process, processSumHigh));
+			break;
+		case 10:
 			Showlist(process);
+			break;
+		case 11:
+		ShowAll(process,1,1,0);
 			break;
 		default:
 			break;
 		}
-
 	} while (option != 0);
 }
