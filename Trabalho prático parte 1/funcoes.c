@@ -112,30 +112,27 @@ Process *ReadFile(Process *process)
             while (!feof(fp))
             {
                 fscanf(fp, "%d\n", &op);
-                printf("OP %d\n", op);
                 i = 0;
                 t = 0;
 
                 operationobj = CreateOperation(op);
                 process = InsertOperationProcess(operationobj, process, op);
-                printf("segunda vez----%p", process);
                 fscanf(fp, "%s\n", str);
-                printf("%s\n", str);
                 pch = strtok(str, "[,]");
                 while (pch != NULL)
                 {
-                    printf("%s\n", pch);
+
                     mch[i] = atoi(pch);
                     pch = strtok(NULL, "[,]");
                     i++;
                 }
 
                 fscanf(fp, "%s\n", str);
-                printf("%s\n", str);
+
                 pch = strtok(str, "(,)");
                 while (pch != NULL)
                 {
-                    printf("%s\n", pch);
+
                     time[t] = atoi(pch);
                     pch = strtok(NULL, "(,)");
                     t++;
