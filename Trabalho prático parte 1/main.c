@@ -128,9 +128,13 @@ int main()
 		case 11:
 			ShowAll(process, 1, 1, 0);
 			break;
+case 12:
 
-			case 12:
+break;
+			case 13:
 				 consultar(ABP abp, int valor);
+		break;
+		
 		default:
 			break;
 		}

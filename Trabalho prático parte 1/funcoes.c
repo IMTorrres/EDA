@@ -759,3 +759,49 @@ int SumHigh(Process *process, int processMeanHigh)
     return sum;
 }
 #pragma endregion
+
+
+
+
+
+
+
+
+
+
+
+
+ABP inserir(ABP abp, int valor)
+{ABP novo;
+ if (abp==NULL)
+ {novo = (ABP) malloc(sizeof(struct reg));
+  if (novo!=NULL)
+  {novo->valor = valor;
+   novo->esquerda = NULL;
+   novo->direita = NULL;
+   return(novo);
+  }
+  else return(abp);
+ }
+ else if (valor < abp->valor)
+  {abp->esquerda = inserir(abp->esquerda,valor);
+   return(abp);
+  }
+ else 
+  {abp->direita = inserir(abp->direita,valor);
+   return(abp);
+  }
+}
+
+
+
+
+ABP consultar(ABP abp, int valor)
+{while (abp != NULL) 
+ {if (abp->valor == valor) return(abp);
+  else if (abp->valor < valor) abp = abp->direita;
+  else abp = abp ->esquerda;
+ }
+ return(NULL);
+}
+
