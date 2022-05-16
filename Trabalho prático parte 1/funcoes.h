@@ -38,7 +38,6 @@ typedef struct _pp
 
 typedef struct _job
 {
-	int valor;//isto é só para teste visto que tem de ser removido
 	Operation *op;
 	struct _job *left;
 	struct _job *right;

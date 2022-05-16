@@ -449,6 +449,10 @@ Process *InsertOperationProcess(Operation *opobj, Process *prs, int nprocess)
         auxPrs = auxPrs->next;
     }
 }
+
+
+
+
 /**
  * @brief Romove uma operation de um process
  *
@@ -520,6 +524,12 @@ Process *InsertMachineOperationProcess(Process *prs, Machine *machine, int nop, 
 
     return prs;
 }
+
+
+
+
+
+
 #pragma endregion
 
 float MeanLow(Process *process, int processMeanLow)
@@ -758,17 +768,57 @@ int SumHigh(Process *process, int processMeanHigh)
 
 
 
+Job InsertOperationBtree(Operation *opObj,Job job, int op)
+{Operation *opAux = NULL;
+Job jobAux=NULL;
+jobAux=consultar(Job job, op);
+opAux=jobAux->op;
 
 
-Job inserir(Job job, int valor)
+    if (opAux != NULL)
+    {
+
+opObj->next=jobAux->op;
+jobAux->op=opObj;
+     
+    }
+}
+
+Operation *CreateOperation(int nOp)
+{
+
+    Operation *aux = (Operation *)calloc(1, sizeof(Operation));
+
+    if (aux != NULL)
+    {
+        aux->noperation = nOp;
+        aux->next = NULL;
+        aux->machine = NULL;
+    }
+    return aux;
+}
+
+
+
+
+
+
+
+
+
+
+
+Job inserir(Job job)//entra aqui apos ter recebido o op
 {
   Job novo;
+  Operation *op=NULL;
+  op=CreateOperation(nOp);
+
   if (job == NULL)
   {
     novo = (Job)malloc(sizeof(struct _job));
     if (novo != NULL)
     {
-      novo->valor = valor;
       novo->right = NULL;
       novo->left = NULL;
       return (novo);
@@ -831,4 +881,12 @@ Job consultar(Job job, int valor)
   }
   return (NULL);
 }
+
+
+
+
+
+
+
+
 
