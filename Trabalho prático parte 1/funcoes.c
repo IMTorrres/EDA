@@ -814,6 +814,8 @@ Job inserir(Job job) // entra aqui apos ter recebido o op
     {
         job->left = inserir(job->left, valor);
         return (job);
+
+        //kfefe
     }
 }
 
