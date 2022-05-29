@@ -17,7 +17,7 @@
 #define TAM 1000
 
 int main()
-{
+{ // Funcoes nas listas simples (fase 1)
 	int opSub;
 	int prsSub;
 	int mchSub;
@@ -26,6 +26,13 @@ int main()
 	int option = 0;
 	Process *process = NULL;
 	Job jobs = NULL;
+
+	// Funcoes na btree (fase 2)
+	int processSubBtree;
+	int operationSubBtree;
+	int timeSubBtree;
+	int machineSubBtree;
+	int machineWantSubBtree;
 	do
 	{
 		int nprocess = 1;
@@ -154,6 +161,23 @@ int main()
 			break;
 		case 16:
 			jobs = WriteFileBtree(jobs);
+			break;
+		case 17:
+
+			printf("\nInsira o processo a alterar\nProcesso:");
+			scanf("%d", &processSubBtree);
+
+			printf("\nInsira a operação a alterar\nOperação:");
+			scanf("%d", &operationSubBtree);
+
+			printf("\nInsira a maquina a alterar\nOperação:");
+			scanf("%d", &operationSubBtree);
+			jobs = EditJob(jobs, processSubBtree, operationSubBtree, machineSubBtree, timeSub, machineWantSubBtree);
+
+			printf("Novo numero de maquina:\nMaquina:");
+			scanf("%d", &mchSub);
+			printf("Novo tempo da maquina %d:\nMaquina:", mchSub);
+			scanf("%d", &timeSub);
 			break;
 		default:
 			break;

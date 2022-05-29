@@ -1038,8 +1038,15 @@ Job WriteFileBtree(Job jobs)
     return jobs;
 }
 
-Job EditJob(Job jobs, int operation)
+Job EditJob(Job jobs,int process, int operation,int machine, int time,int machineWantSub)
 {
-    SerchJob(jobs,operation)
+    Job jobAux=NULL;
+    jobAux=SerchJob(jobs,process);
+
+Operation *opObj=SearchOperation(jobAux->prs->op,operation);
+Machine *machineObj=SearchMachine(opObj->machine,machineWantSub);
+machineObj->pc=machine;
+machineObj->time=time;
 
 }
+ 
